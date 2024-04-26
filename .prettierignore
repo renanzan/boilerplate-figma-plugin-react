@@ -1,0 +1,25 @@
+# Ignore artifacts:
+**/public
+**/node_modules
+
+# compiled output
+**/dist
+
+# Logs
+**/logs
+**/*.log
+**/npm-debug.log*
+**/pnpm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/lerna-debug.log*
+
+# IDE - VSCode
+**/.vscode/*
+
+# Others
+**/.env
+**/yarn.lock
+**/.env.local
+**/yarn.lock
+**/package-lock.json

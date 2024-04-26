@@ -1,0 +1,24 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": false,
+  "editor.detectIndentation": false,
+  "explorer.compactFolders": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSaveMode": "file",
+	
+  "[typescriptreact][json][jsonc]": {
+    "editor.rulers": [80]
+  },
+
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/app.html": true
+  },
+
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "index.js": "index.*.js, index.*.mts, index.mjs",
+  }
+}

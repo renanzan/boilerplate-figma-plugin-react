@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"verbatimModuleSyntax": true,
+		"typeRoots": ["./node_modules/@types", "./node_modules/@figma"],
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	},
+	"include": ["./src/**/*.ts", "./src/**/*.tsx", "./@types/**/*.d.ts"],
+	"exclude": ["./node_modules", "./dist"]
+}
