@@ -1,7 +1,7 @@
 import { useAppContext } from "@/App.context";
 
 export const Footer = () => {
-	const { hello } = useAppContext();
+	const { preference } = useAppContext();
 
 	const onCancel = () => {
 		parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
@@ -16,12 +16,13 @@ export const Footer = () => {
 			<button
 				className="flex-1"
 				onClick={() => {
-					console.log("testando", { hello });
-					parent.postMessage({ pluginMessage: { type: "hello" } }, "*");
-					alert("Hello Figma!");
+					parent.postMessage(
+						{ pluginMessage: { type: "export", selection: preference } },
+						"*"
+					);
 				}}
 			>
-				Say Hello
+				Export
 			</button>
 		</footer>
 	);
