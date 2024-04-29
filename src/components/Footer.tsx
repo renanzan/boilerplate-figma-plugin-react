@@ -1,7 +1,7 @@
 import { useAppContext } from "@/App.context";
 
 export const Footer = () => {
-	const { preference } = useAppContext();
+	const { preference, numberOfComponents } = useAppContext();
 
 	const onCancel = () => {
 		parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
@@ -22,7 +22,7 @@ export const Footer = () => {
 					);
 				}}
 			>
-				Export
+				Export{!!numberOfComponents && ` (${numberOfComponents})`}
 			</button>
 		</footer>
 	);

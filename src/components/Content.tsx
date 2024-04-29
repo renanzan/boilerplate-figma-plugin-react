@@ -38,11 +38,7 @@ const Content = () => {
 						? "No variants found in selected component sets."
 						: `Number of Variants: ${numberOfComponents}`}
 				</p>
-
-				<p id="itemsToExport"></p>
 			</div>
-
-			<p className="text-center">Variant names for</p>
 
 			<div className="flex gap-4 mt-2">
 				<label htmlFor="folders" className="flex gap-1">

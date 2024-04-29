@@ -37,20 +37,15 @@ export const getComponentSetData = () => {
 	const selection = figma.currentPage.selection;
 	const componentSets = getComponentSets();
 
-	if (selection.length == 0) {
-		return null;
-	} else if (componentSets.length > 0) {
-		let firstComponentSet = componentSets[componentSets.length - 1];
+	if (selection.length <= 0) return {};
 
-		return {
-			componentSetsLength: componentSets.length,
-			numberOfComponents: getNumberOfComponents(componentSets),
-			firstComponentSet: {
-				metaData: getDataFromComponent(firstComponentSet.children[0])
-			}
-		};
-	} else {
-		// need to update UI to communicate that the layers that were selected don't contain any variants
-		return null;
-	}
+	const firstComponentSet = componentSets[componentSets.length - 1];
+
+	return {
+		componentSetsLength: componentSets.length,
+		numberOfComponents: getNumberOfComponents(componentSets),
+		firstComponentSet: {
+			metaData: getDataFromComponent(firstComponentSet.children[0])
+		}
+	};
 };

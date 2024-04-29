@@ -1,13 +1,52 @@
 import { onMessage } from "./controller/controller";
-import { getComponentSetData } from "./utils/getComponentSetData";
+import {
+	getComponentSetData,
+	getComponentSets
+} from "./utils/getComponentSetData";
+import { getDataFromComponent } from "./utils/getDataFromComponent";
 
-figma.showUI(__html__, { height: 300, width: 400 });
+figma.showUI(__html__, { height: 500, width: 800 });
 
 figma.on("selectionchange", () => {
-	figma.ui.postMessage({
-		type: "selectionChange",
-		data: getComponentSetData()
-	});
+	let promises = [];
+	let variantDataArray = [];
+	const componentSets = getComponentSets();
+	const data = getComponentSetData();
+
+	if (componentSets.length) {
+		componentSets.forEach((componentSet) => {
+			componentSet.children.forEach((variant) => {
+				let variantIsVisible = variant.visible;
+
+				if (!variantIsVisible) variant.visible = true;
+
+				let svgPromise = variant.exportAsync({ format: "SVG" }).finally(() => {
+					if (!variantIsVisible) variant.visible = false;
+				});
+
+				let variantData = getDataFromComponent(variant);
+
+				variantDataArray.push(variantData);
+				promises.push(svgPromise);
+			});
+		});
+
+		Promise.all(promises).then((svgDataArray) => {
+			figma.ui.postMessage({
+				type: "selectionChange",
+				data: Object.assign(data, {
+					svgDataArray
+				})
+			});
+		});
+	} else {
+		figma.ui.postMessage({
+			type: "selectionChange",
+			data: Object.assign(data, {
+				svgDataArray: []
+			})
+		});
+	}
 });
 
 figma.clientStorage.getAsync("preference").then((preference) => {

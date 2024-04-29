@@ -1,9 +1,13 @@
-export const getDataFromComponent = (component: SceneNode) => {
-	let parentName = component.parent.name.toLowerCase();
-	let parts = component.name.split(", ");
+const bools = ["yes", "true", "no", "false"];
+const falses = ["no", "false"];
 
-	let properties = [];
-	let variants = [];
+export const getDataFromComponent = (component: SceneNode) => {
+	const parentName = component.parent.name.toLowerCase();
+	const parts = component.name.split(", ");
+	const properties = [];
+	const variants = [];
+
+	let variantSubstring = "";
 
 	parts.forEach((partText) => {
 		let splitText = partText.split("=");
@@ -11,19 +15,15 @@ export const getDataFromComponent = (component: SceneNode) => {
 		properties.push(splitText[0]);
 	});
 
-	let variantSubstring = "";
-	let bools = ["yes", "true", "no", "false"];
-	let falses = ["no", "false"];
 	variants.forEach((variant, index) => {
 		if (bools.indexOf(variant.toLowerCase()) === -1) {
 			variantSubstring += `-${variant.toLowerCase()}`;
-		} else {
-			if (falses.indexOf(variant.toLowerCase()) === -1) {
-				variantSubstring += `-${properties[index].toLowerCase()}`;
-			}
+		} else if (falses.indexOf(variant.toLowerCase()) === -1) {
+			variantSubstring += `-${properties[index].toLowerCase()}`;
 		}
 	});
-	// ex: -variant1-variant2-variant3...
-	variantSubstring = variantSubstring.substring(1); // remove first '-'
+
+	variantSubstring = variantSubstring.substring(1);
+
 	return { componentName: parentName, variantSubstring: variantSubstring };
 };
