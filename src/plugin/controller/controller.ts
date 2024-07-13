@@ -47,6 +47,47 @@ export const onMessage: MessageEventHandler = async (msg, props) => {
 		});
 	}
 
+	if (msg.type === "test") {
+		const structure = msg.structure;
+		const frame = figma.createFrame();
+
+		frame.x = 50;
+		frame.y = 50;
+
+		frame.name = "Icons Pack";
+		//frame.resize(1280, 720);
+
+		frame.fills = [{ type: "SOLID", color: { r: 1, g: 0, b: 0 } }];
+		frame.layoutMode = "HORIZONTAL";
+
+		for (const variant in structure) {
+			const variantFrame = figma.createFrame();
+			variantFrame.name = variant;
+
+			variantFrame.layoutMode = "VERTICAL";
+
+			frame.appendChild(variantFrame);
+
+			for (const category in structure[variant]) {
+				const categoryFrame = figma.createFrame();
+				categoryFrame.name = category;
+
+				categoryFrame.layoutMode = "VERTICAL";
+
+				variantFrame.appendChild(categoryFrame);
+
+				for (const name in structure[variant][category]) {
+					const svgString = structure[variant][category][name];
+
+					const svgNode = figma.createNodeFromSvg(svgString);
+					svgNode.name = name;
+
+					categoryFrame.appendChild(svgNode);
+				}
+			}
+		}
+	}
+
 	if (msg.type === "close") {
 		figma.closePlugin();
 	}
